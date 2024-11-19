@@ -1,0 +1,6 @@
+# RUN KAFKA CLUSTERS:
+docker-compose -f common.yml -f kafka_cluster.yml up
+
+
+# RUN AVRO
+just run mvn clean install, it will automatically generated

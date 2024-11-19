@@ -1,0 +1,5 @@
+# RUN KAFKA CLUSTERS:
+docker-compose -f common.yml -f zookeeper.yml up
+docker-compose -f common.yml -f kafka_cluster.yml up
+
+# RUN AVRO
