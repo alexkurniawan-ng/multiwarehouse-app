@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: asia-southeast2-docker.pkg.dev/com-ecommerce-app/com-ecommerce-app-repository/order.service:1.0-SNAPSHOT
+          image: asia-southeast2-docker.pkg.dev/multi-warehouse-442212/com-multiwarehouse-app-repository/order.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-service:5433/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+              value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: SPRING_DATASOURCE_INITIALIZATION-MODE
               value: "never"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
@@ -90,10 +90,10 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: asia-southeast2-docker.pkg.dev/com-ecommerce-app/com-ecommerce-app-repository/payment.service:1.0-SNAPSHOT
+          image: asia-southeast2-docker.pkg.dev/multi-warehouse-442212/com-multiwarehouse-app-repository/payment.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-service:5433/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+              value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: SPRING_DATASOURCE_INITIALIZATION-MODE
               value: "never"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
@@ -162,7 +162,7 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: asia-southeast2-docker.pkg.dev/com-ecommerce-app/com-ecommerce-app-repository/customer.service:1.0-SNAPSHOT
+          image: asia-southeast2-docker.pkg.dev/multi-warehouse-442212/com-multiwarehouse-app-repository/customer.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://postgres-service:5433/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
