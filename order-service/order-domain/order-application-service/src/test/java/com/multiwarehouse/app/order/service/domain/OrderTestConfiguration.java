@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(scanBasePackages = "com.ecommerce.app")
+@SpringBootApplication(scanBasePackages = "com.multiwarehouse.app")
 public class OrderTestConfiguration {
     @Bean
     public OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher(){

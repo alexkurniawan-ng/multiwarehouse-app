@@ -2,6 +2,8 @@ DROP SCHEMA IF EXISTS seller CASCADE;
 
 CREATE SCHEMA seller;
 
+CREATE EXTENSION IF NOT EXISTS plpgsql;
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 DROP TABLE IF EXISTS seller.sellers CASCADE;
@@ -52,52 +54,57 @@ CREATE TABLE seller.seller_products
 
 ALTER TABLE seller.seller_products
     ADD CONSTRAINT "FK_SELLER_ID" FOREIGN KEY (seller_id)
-    REFERENCES seller.sellers (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE RESTRICT
-    NOT VALID;
+        REFERENCES seller.sellers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE RESTRICT
+        NOT VALID;
 
 ALTER TABLE seller.seller_products
     ADD CONSTRAINT "FK_PRODUCT_ID" FOREIGN KEY (product_id)
-    REFERENCES seller.products (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE RESTRICT
-    NOT VALID;
+        REFERENCES seller.products (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE RESTRICT
+        NOT VALID;
 
 DROP MATERIALIZED VIEW IF EXISTS seller.order_seller_m_view;
 
 CREATE MATERIALIZED VIEW seller.order_seller_m_view
-TABLESPACE pg_default
+    TABLESPACE pg_default
 AS
- SELECT r.id AS seller_id,
+SELECT
+    r.id AS seller_id,
     r.name AS seller_name,
     r.active AS seller_active,
     p.id AS product_id,
     p.name AS product_name,
     p.price AS product_price,
     p.available AS product_available
-   FROM seller.sellers r,
+FROM
+    seller.sellers r,
     seller.products p,
     seller.seller_products rp
-  WHERE r.id = rp.seller_id AND p.id = rp.product_id
+WHERE
+    r.id = rp.seller_id AND p.id = rp.product_id
 WITH DATA;
 
-refresh materialized VIEW seller.order_seller_m_view;
+REFRESH MATERIALIZED VIEW seller.order_seller_m_view;
 
-DROP function IF EXISTS seller.refresh_order_seller_m_view;
+DROP FUNCTION IF EXISTS seller.refresh_order_seller_m_view;
 
-CREATE OR replace function seller.refresh_order_seller_m_view()
-returns trigger
-AS '
+CREATE OR REPLACE FUNCTION seller.refresh_order_seller_m_view()
+    RETURNS trigger
+    LANGUAGE plpgsql
+AS $$
 BEGIN
-    refresh materialized VIEW seller.order_seller_m_view;
-    return null;
+    REFRESH MATERIALIZED VIEW seller.order_seller_m_view;
+    RETURN NULL;
 END;
-'  LANGUAGE plpgsql;
+$$;
 
-DROP trigger IF EXISTS refresh_order_seller_m_view ON seller.seller_products;
+DROP TRIGGER IF EXISTS refresh_order_seller_m_view ON seller.seller_products;
 
-CREATE trigger refresh_order_seller_m_view
-after INSERT OR UPDATE OR DELETE OR truncate
-ON seller.seller_products FOR each statement
+CREATE TRIGGER refresh_order_seller_m_view
+    AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+    ON seller.seller_products
+    FOR EACH STATEMENT
 EXECUTE PROCEDURE seller.refresh_order_seller_m_view();

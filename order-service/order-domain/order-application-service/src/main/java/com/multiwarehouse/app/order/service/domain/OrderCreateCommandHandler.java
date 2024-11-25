@@ -34,3 +34,7 @@ public class OrderCreateCommandHandler {
                 "Order created successfully");
     }
 }
+
+
+// Note: All publish messages are handled by this
+// check on dto -> create -> CreateOrderCommand & CreateOrderResponse

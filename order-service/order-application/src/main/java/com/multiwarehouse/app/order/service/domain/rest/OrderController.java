@@ -22,6 +22,12 @@ public class OrderController {
         this.orderApplicationService = orderApplicationService;
     }
 
+    @GetMapping
+    public ResponseEntity<String> getOrders() {
+
+        return ResponseEntity.ok("Ok, get your orders");
+    }
+
     @PostMapping
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody CreateOrderCommand createOrderCommand) {
         log.info("Creating order for customer: {} at seller: {}", createOrderCommand.getCustomerId(),

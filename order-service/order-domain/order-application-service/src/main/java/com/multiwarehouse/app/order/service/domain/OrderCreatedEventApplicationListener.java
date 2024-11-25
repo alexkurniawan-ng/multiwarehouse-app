@@ -1,4 +1,4 @@
-package com.ecommerce.app.order.service.domain;
+package com.multiwarehouse.app.order.service.domain;
 
 import com.multiwarehouse.app.order.service.domain.event.OrderCreatedEvent;
 import com.multiwarehouse.app.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
@@ -21,3 +21,6 @@ public class OrderCreatedEventApplicationListener {
         orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
     }
 }
+
+
+// it means to receive message from payment
