@@ -3,7 +3,7 @@ package com.multiwarehouse.app.order.service.messaging.listener.kafka;
 import com.multiwarehouse.app.kafka.consumer.KafkaConsumer;
 import com.multiwarehouse.app.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.multiwarehouse.app.kafka.order.avro.model.PaymentStatus;
-//import com.multiwarehouse.app.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
+import com.multiwarehouse.app.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import com.multiwarehouse.app.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -18,13 +18,14 @@ import java.util.List;
 @Component
 public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseAvroModel> {
 
-//    private final PaymentResponseMessageListener paymentResponseMessageListener;
+    private final PaymentResponseMessageListener paymentResponseMessageListener;
     private final OrderMessagingDataMapper orderMessagingDataMapper;
 
     public PaymentResponseKafkaListener(
+            PaymentResponseMessageListener paymentResponseMessageListener,
             OrderMessagingDataMapper orderMessagingDataMapper) {
-//        PaymentResponseMessageListener paymentResponseMessageListener,
-//        this.paymentResponseMessageListener = paymentResponseMessageListener;
+
+        this.paymentResponseMessageListener = paymentResponseMessageListener;
         this.orderMessagingDataMapper = orderMessagingDataMapper;
     }
 
@@ -43,13 +44,13 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
         messages.forEach(paymentResponseAvroModel -> {
             if (PaymentStatus.COMPLETED == paymentResponseAvroModel.getPaymentStatus()) {
                 log.info("Processing successful payment for order id: {}", paymentResponseAvroModel.getOrderId());
-//                paymentResponseMessageListener.paymentCompleted(orderMessagingDataMapper
-//                        .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
+                paymentResponseMessageListener.paymentCompleted(orderMessagingDataMapper
+                        .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
             } else if (PaymentStatus.CANCELLED == paymentResponseAvroModel.getPaymentStatus() ||
                     PaymentStatus.FAILED == paymentResponseAvroModel.getPaymentStatus()) {
                 log.info("Processing unsuccessful payment for order id: {}", paymentResponseAvroModel.getOrderId());
-//                paymentResponseMessageListener.paymentCancelled(orderMessagingDataMapper
-//                        .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
+                paymentResponseMessageListener.paymentCancelled(orderMessagingDataMapper
+                        .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
             }
         });
     }

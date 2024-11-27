@@ -12,22 +12,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentCreateCommandHandler {
 
-    private final PaymentCreateHelper paymentCreateHelper;
+    private final PaymentRequestHelper paymentRequestHelper;
 
     private final PaymentDataMapper paymentDataMapper;
 
     private final PaymentCreatedOrderRequestMessagePublisher paymentCreatedOrderRequestMessagePublisher;
 
-    public PaymentCreateCommandHandler(PaymentCreateHelper paymentCreateHelper,
+    public PaymentCreateCommandHandler(PaymentRequestHelper paymentRequestHelper,
                                        PaymentDataMapper paymentDataMapper,
                                        PaymentCreatedOrderRequestMessagePublisher paymentCreatedOrderRequestMessagePublisher) {
-        this.paymentCreateHelper = paymentCreateHelper;
+        this.paymentRequestHelper = paymentRequestHelper;
         this.paymentDataMapper = paymentDataMapper;
         this.paymentCreatedOrderRequestMessagePublisher = paymentCreatedOrderRequestMessagePublisher;
     }
 
     public CreatePaymentResponse createPayment(CreatePaymentCommand createPaymentCommand) {
-        PaymentCreatedEvent paymentCreatedEvent = paymentCreateHelper.persistPayment(createPaymentCommand);
+        PaymentCreatedEvent paymentCreatedEvent = paymentRequestHelper.persistPayment(createPaymentCommand);
         log.info("Payment is created with id: {}", paymentCreatedEvent.getPayment().getId().getValue());
         paymentCreatedOrderRequestMessagePublisher.publish(paymentCreatedEvent);
         return paymentDataMapper.paymentToCreatePaymentResponse(paymentCreatedEvent.getPayment(),

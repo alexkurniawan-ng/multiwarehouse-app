@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class OrderResponse {
+public class PaymentRequest {
     private final String id;
 
 //    private final String sagaId;

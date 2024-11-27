@@ -1,19 +1,17 @@
 package com.multiwarehouse.app.payment.service.domain;
 
 import com.multiwarehouse.app.payment.service.domain.dto.create.CreatePaymentCommand;
-import com.multiwarehouse.app.payment.service.domain.entity.Order;
 import com.multiwarehouse.app.payment.service.domain.entity.Payment;
 import com.multiwarehouse.app.payment.service.domain.event.PaymentCreatedEvent;
 import com.multiwarehouse.app.payment.service.domain.mapper.PaymentDataMapper;
 import com.multiwarehouse.app.payment.service.domain.ports.output.message.publisher.order.PaymentCreatedOrderRequestMessagePublisher;
-import com.multiwarehouse.app.payment.service.domain.ports.output.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-public class PaymentCreateHelper {
+public class PaymentRequestHelper {
 
     private final PaymentDomainService paymentDomainService;
 
@@ -23,10 +21,10 @@ public class PaymentCreateHelper {
 
     private final PaymentCreatedOrderRequestMessagePublisher paymentCreatedEventDomainEventPublisher;
 
-    public PaymentCreateHelper(PaymentDomainService paymentDomainService,
+    public PaymentRequestHelper(PaymentDomainService paymentDomainService,
 //                               PaymentRepository paymentRepository,
-                               PaymentDataMapper paymentDataMapper,
-                               PaymentCreatedOrderRequestMessagePublisher paymentCreatedOrderRequestMessagePublisher) {
+                                PaymentDataMapper paymentDataMapper,
+                                PaymentCreatedOrderRequestMessagePublisher paymentCreatedOrderRequestMessagePublisher) {
         this.paymentDomainService = paymentDomainService;
 //        this.paymentRepository = paymentRepository;
         this.paymentDataMapper = paymentDataMapper;

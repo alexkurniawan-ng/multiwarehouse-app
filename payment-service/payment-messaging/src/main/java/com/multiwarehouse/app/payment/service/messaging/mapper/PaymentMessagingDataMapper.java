@@ -2,7 +2,7 @@ package com.multiwarehouse.app.payment.service.messaging.mapper;
 
 import com.multiwarehouse.app.kafka.payment.avro.model.OrderRequestAvroModel;
 import com.multiwarehouse.app.kafka.payment.avro.model.OrderResponseAvroModel;
-import com.multiwarehouse.app.payment.service.domain.dto.message.OrderResponse;
+import com.multiwarehouse.app.payment.service.domain.dto.message.PaymentRequest;
 import com.multiwarehouse.app.payment.service.domain.entity.Payment;
 import com.multiwarehouse.app.payment.service.domain.event.PaymentCreatedEvent;
 import org.springframework.stereotype.Component;
@@ -25,8 +25,8 @@ public class PaymentMessagingDataMapper {
     }
 
 
-    public OrderResponse orderResponseAvroModelToOrderResponse(OrderResponseAvroModel orderResponseAvroModel) {
-        return OrderResponse.builder()
+    public PaymentRequest orderResponseAvroModelToOrderResponse(OrderResponseAvroModel orderResponseAvroModel) {
+        return PaymentRequest.builder()
                 .id(orderResponseAvroModel.getId().toString())
 //                .sagaId(orderResponseAvroModel.getSagaId())
                 .orderId(orderResponseAvroModel.getOrderId().toString())
