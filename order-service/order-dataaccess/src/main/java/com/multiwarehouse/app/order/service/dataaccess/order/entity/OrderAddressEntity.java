@@ -22,6 +22,7 @@ public class OrderAddressEntity {
     private OrderEntity order;
 
     private String street;
+    private String province;
     private String postalCode;
     private String city;
 

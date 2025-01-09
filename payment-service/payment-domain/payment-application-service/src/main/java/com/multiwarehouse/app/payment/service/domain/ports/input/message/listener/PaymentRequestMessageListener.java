@@ -1,8 +1,8 @@
 package com.multiwarehouse.app.payment.service.domain.ports.input.message.listener;
 
-import com.multiwarehouse.app.payment.service.domain.dto.message.PaymentRequest;
+import com.multiwarehouse.app.payment.service.domain.dto.PaymentRequest;
 
-public interface PaymentRequestMessageListener {
+public interface  PaymentRequestMessageListener {
 
     void completePayment(PaymentRequest paymentRequest);
 

@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "payment-service")
 public class PaymentServiceConfigData {
-    private String orderRequestTopicName;
-    private String orderResponseTopicName;
-//    private String sellerApprovalRequestTopicName;
-//    private String sellerApprovalResponseTopicName;
+    private String paymentRequestTopicName;
+    private String paymentResponseTopicName;
 }

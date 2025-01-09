@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class SellerApprovalResponse {
     private final String id;
-//    private final String sagaId;
+    private final String sagaId;
     private final String orderId;
     private final String sellerId;
     private final Instant createdAt;

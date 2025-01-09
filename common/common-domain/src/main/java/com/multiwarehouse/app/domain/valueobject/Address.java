@@ -8,12 +8,18 @@ public class Address {
     private final String street;
     private final String postalCode;
     private final String city;
+    private final String province;
 
-    public Address(UUID id, String street, String postalCode, String city) {
+    public Address(UUID id,
+                   String street,
+                   String city,
+                   String province,
+                   String postalCode) {
         this.id = id;
         this.street = street;
-        this.postalCode = postalCode;
         this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
     }
 
     public UUID getId() {
@@ -32,18 +38,17 @@ public class Address {
         return city;
     }
 
+    public String getProvince() { return province; }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address that = (Address) o;
-        return street.equals(that.street) && postalCode.equals(that.postalCode) && city.equals(that.city);
+        Address address = (Address) o;
+        return Objects.equals(street, address.street) && Objects.equals(postalCode, address.postalCode) && Objects.equals(city, address.city) && Objects.equals(province, address.province);
     }
-
-
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, postalCode, city);
+        return Objects.hash(street, postalCode, city, province);
     }
 }

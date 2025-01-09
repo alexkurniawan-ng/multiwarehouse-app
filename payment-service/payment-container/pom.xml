@@ -7,7 +7,6 @@
         <groupId>com.multiwarehouse.app</groupId>
         <artifactId>payment-service</artifactId>
         <version>1.0-SNAPSHOT</version>
-<!--        <relativePath>../../pom.xml</relativePath>-->
     </parent>
 
     <artifactId>payment-container</artifactId>
@@ -24,10 +23,10 @@
             <artifactId>payment-application-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.multiwarehouse.app</groupId>
-            <artifactId>payment-application</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.multiwarehouse.app</groupId>-->
+<!--            <artifactId>payment-application</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.multiwarehouse.app</groupId>
             <artifactId>payment-dataaccess</artifactId>
@@ -51,12 +50,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-<!--                <configuration>-->
-<!--                    <mainClass>com.multiwarehouse.app.payment.service</mainClass>-->
-<!--                    <image>-->
-<!--                        <name>${project.groupId}/payment.service:${project.version}</name>-->
-<!--                    </image>-->
-<!--                </configuration>-->
+                <configuration>
+                    <mainClass>com.multiwarehouse.app.payment.service</mainClass>
+                    <image>
+                        <name>${project.groupId}/payment.service:${project.version}</name>
+                    </image>
+                </configuration>
 <!--                <executions>-->
 <!--                    <execution>-->
 <!--                        <phase>install</phase>-->

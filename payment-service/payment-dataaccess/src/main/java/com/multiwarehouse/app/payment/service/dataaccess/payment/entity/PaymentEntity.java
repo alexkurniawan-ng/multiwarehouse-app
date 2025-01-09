@@ -1,11 +1,11 @@
 package com.multiwarehouse.app.payment.service.dataaccess.payment.entity;
 
-
 import com.multiwarehouse.app.domain.valueobject.PaymentStatus;
-import javax.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,30 +17,26 @@ import java.util.UUID;
 @Table(name = "payments")
 @Entity
 public class PaymentEntity {
+
     @Id
     private UUID id;
-    private UUID orderId;
     private UUID customerId;
-    private BigDecimal amount;
+    private UUID orderId;
+    private BigDecimal price;
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
-    private String currency;
-    private String failureMessages;
-
-//    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL)
-//    private
-
+    private PaymentStatus status;
+    private ZonedDateTime createdAt;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PaymentEntity that = (PaymentEntity) o;
-        return Objects.equals(id, that.id);
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id);
     }
 }

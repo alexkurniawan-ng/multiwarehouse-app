@@ -30,19 +30,21 @@ public class OrderCreateHelper {
     private final OrderDataMapper orderDataMapper;
 
     private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
+    private final ApplicationDomainEventPublisher applicationDomainEventPublisher;
 
     public OrderCreateHelper(OrderDomainService orderDomainService,
                              OrderRepository orderRepository,
                              CustomerRepository customerRepository,
                              SellerRepository sellerRepository,
                              OrderDataMapper orderDataMapper,
-                             OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
+                             OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher, ApplicationDomainEventPublisher applicationDomainEventPublisher) {
         this.orderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.sellerRepository = sellerRepository;
         this.orderDataMapper = orderDataMapper;
         this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
+        this.applicationDomainEventPublisher = applicationDomainEventPublisher;
     }
 
     @Transactional
@@ -54,6 +56,7 @@ public class OrderCreateHelper {
                 orderCreatedPaymentRequestMessagePublisher);
         saveOrder(order);
         log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+        applicationDomainEventPublisher.publish(orderCreatedEvent); // publish to KAFKA after saving to database
         return orderCreatedEvent;
     }
 

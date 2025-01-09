@@ -5,6 +5,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-domain/warehouse-domain-core/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-application-service/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-domain/warehouse-application-service/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-messaging/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-dataaccess/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-container/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/warehouse-application/pom.xml" />
       </list>
     </option>
   </component>

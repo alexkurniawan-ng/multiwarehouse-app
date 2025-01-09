@@ -4,7 +4,6 @@ import com.multiwarehouse.app.domain.entity.AggregateRoot;
 import com.multiwarehouse.app.domain.valueobject.*;
 import com.multiwarehouse.app.order.service.domain.exception.OrderDomainException;
 import com.multiwarehouse.app.order.service.domain.valueobject.OrderItemId;
-import com.multiwarehouse.app.order.service.domain.valueobject.StreetAddress;
 import com.multiwarehouse.app.order.service.domain.valueobject.TrackingId;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.UUID;
 public class Order extends AggregateRoot<OrderId> {
     private final CustomerId customerId;
     private final SellerId sellerId;
-    private final StreetAddress deliveryAddress;
+    private final Address deliveryAddress;
     private final Money price;
     private final List<OrderItem> items;
 
@@ -137,7 +136,7 @@ public class Order extends AggregateRoot<OrderId> {
         return sellerId;
     }
 
-    public StreetAddress getDeliveryAddress() {
+    public Address getDeliveryAddress() {
         return deliveryAddress;
     }
 
@@ -165,7 +164,7 @@ public class Order extends AggregateRoot<OrderId> {
         private OrderId orderId;
         private CustomerId customerId;
         private SellerId sellerId;
-        private StreetAddress deliveryAddress;
+        private Address deliveryAddress;
         private Money price;
         private List<OrderItem> items;
         private TrackingId trackingId;
@@ -190,7 +189,7 @@ public class Order extends AggregateRoot<OrderId> {
             return this;
         }
 
-        public Builder deliveryAddress(StreetAddress val) {
+        public Builder deliveryAddress(Address val) {
             deliveryAddress = val;
             return this;
         }

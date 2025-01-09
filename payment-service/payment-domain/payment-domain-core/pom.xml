@@ -7,7 +7,6 @@
         <groupId>com.multiwarehouse.app</groupId>
         <artifactId>payment-domain</artifactId>
         <version>1.0-SNAPSHOT</version>
-<!--        <relativePath>../../../pom.xml</relativePath>-->
     </parent>
 
     <artifactId>payment-domain-core</artifactId>
@@ -22,6 +21,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.34</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+<!--            <version>${org.slf4j.version}</version>-->
+            <version>1.7.36</version>
         </dependency>
     </dependencies>
 

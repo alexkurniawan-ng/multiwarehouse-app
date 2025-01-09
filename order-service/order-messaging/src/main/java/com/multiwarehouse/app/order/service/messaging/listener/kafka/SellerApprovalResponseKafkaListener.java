@@ -4,6 +4,7 @@ import com.multiwarehouse.app.kafka.consumer.KafkaConsumer;
 import com.multiwarehouse.app.kafka.order.avro.model.OrderApprovalStatus;
 import com.multiwarehouse.app.kafka.order.avro.model.SellerApprovalResponseAvroModel;
 //import com.multiwarehouse.app.order.service.domain.ports.input.message.listener.sellerapproval.SellerApprovalResponseMessageListener;
+import com.multiwarehouse.app.order.service.domain.ports.input.message.listener.sellerapproval.SellerApprovalResponseMessageListener;
 import com.multiwarehouse.app.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,14 +21,14 @@ import static com.multiwarehouse.app.order.service.domain.entity.Order.FAILURE_M
 @Component
 public class SellerApprovalResponseKafkaListener implements KafkaConsumer<SellerApprovalResponseAvroModel> {
 
-//    private final SellerApprovalResponseMessageListener sellerApprovalResponseMessageListener;
+    private final SellerApprovalResponseMessageListener sellerApprovalResponseMessageListener;
     private final OrderMessagingDataMapper orderMessagingDataMapper;
 
     public SellerApprovalResponseKafkaListener(
-//            SellerApprovalResponseMessageListener
-//                                                           sellerApprovalResponseMessageListener,
+            SellerApprovalResponseMessageListener
+                                                           sellerApprovalResponseMessageListener,
                                                    OrderMessagingDataMapper orderMessagingDataMapper) {
-//        this.sellerApprovalResponseMessageListener = sellerApprovalResponseMessageListener;
+        this.sellerApprovalResponseMessageListener = sellerApprovalResponseMessageListener;
         this.orderMessagingDataMapper = orderMessagingDataMapper;
     }
 
@@ -48,15 +49,15 @@ public class SellerApprovalResponseKafkaListener implements KafkaConsumer<Seller
             if (OrderApprovalStatus.APPROVED == sellerApprovalResponseAvroModel.getOrderApprovalStatus()) {
                 log.info("Processing approved order for order id: {}",
                         sellerApprovalResponseAvroModel.getOrderId());
-//                sellerApprovalResponseMessageListener.orderApproved(orderMessagingDataMapper
-//                        .approvalResponseAvroModelToApprovalResponse(sellerApprovalResponseAvroModel));
+                sellerApprovalResponseMessageListener.orderApproved(orderMessagingDataMapper
+                        .approvalResponseAvroModelToApprovalResponse(sellerApprovalResponseAvroModel));
             } else if (OrderApprovalStatus.REJECTED == sellerApprovalResponseAvroModel.getOrderApprovalStatus()) {
                 log.info("Processing rejected order for order id: {}, with failure messages: {}",
                         sellerApprovalResponseAvroModel.getOrderId(),
                         String.join(FAILURE_MESSAGE_DELIMITER,
                                 sellerApprovalResponseAvroModel.getFailureMessages()));
-//                sellerApprovalResponseMessageListener.orderRejected(orderMessagingDataMapper
-//                        .approvalResponseAvroModelToApprovalResponse(sellerApprovalResponseAvroModel));
+                sellerApprovalResponseMessageListener.orderRejected(orderMessagingDataMapper
+                        .approvalResponseAvroModelToApprovalResponse(sellerApprovalResponseAvroModel));
             }
         });
 

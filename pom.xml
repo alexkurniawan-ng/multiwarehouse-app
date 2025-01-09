@@ -20,7 +20,9 @@
         <module>common</module>
         <module>payment-service</module>
         <module>order-service</module>
+<!--        <module>warehouse-service</module>-->
         <module>infrastructure</module>
+        <module>customer-service</module>
     </modules>
 
     <properties>
@@ -141,6 +143,32 @@
                 <groupId>com.multiwarehouse.app</groupId>
                 <artifactId>payment-messaging</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.multiwarehouse.app</groupId>
+                <artifactId>warehouse-application</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.multiwarehouse.app</groupId>
+                <artifactId>warehouse-container</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.multiwarehouse.app</groupId>
+                <artifactId>warehouse-domain</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.multiwarehouse.app</groupId>
+                <artifactId>warehouse-messaging</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.multiwarehouse.app</groupId>
+                <artifactId>warehouse-dataaccess</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>

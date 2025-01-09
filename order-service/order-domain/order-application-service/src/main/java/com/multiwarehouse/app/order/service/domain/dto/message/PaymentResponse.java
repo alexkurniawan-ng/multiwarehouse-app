@@ -15,7 +15,7 @@ import java.util.List;
 public class PaymentResponse {
     private final String id;
 
-//    private final String sagaId;
+    private final String sagaId;
 
     private final String orderId;
 

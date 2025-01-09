@@ -12,7 +12,7 @@ import com.multiwarehouse.app.order.service.domain.entity.Order;
 import com.multiwarehouse.app.order.service.domain.entity.OrderItem;
 import com.multiwarehouse.app.order.service.domain.entity.Product;
 import com.multiwarehouse.app.order.service.domain.entity.Seller;
-import com.multiwarehouse.app.order.service.domain.valueobject.StreetAddress;
+import com.multiwarehouse.app.domain.valueobject.Address;
 import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -68,10 +68,11 @@ public class OrderDataMapper {
                                 .build()).collect(Collectors.toList());
     }
 
-    private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
-        return new StreetAddress(
+    private Address orderAddressToStreetAddress(OrderAddress orderAddress) {
+        return new Address(
                 UUID.randomUUID(),
                 orderAddress.getStreet(),
+                orderAddress.getProvince(),
                 orderAddress.getPostalCode(),
                 orderAddress.getCity()
         );

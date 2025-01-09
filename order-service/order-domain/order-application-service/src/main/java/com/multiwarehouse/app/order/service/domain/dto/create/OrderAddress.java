@@ -28,4 +28,8 @@ public class OrderAddress {
     @NotNull
     @Max(value = 50)
     private final String city;
+
+    @NotNull
+    @Max(value = 50)
+    private final String province;
 }

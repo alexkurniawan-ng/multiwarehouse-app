@@ -12,10 +12,11 @@
     <artifactId>order-application-service</artifactId>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.multiwarehouse.app</groupId>-->
-<!--            <artifactId>saga</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.multiwarehouse.app</groupId>
+            <artifactId>saga</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.multiwarehouse.app</groupId>
             <artifactId>order-domain-core</artifactId>

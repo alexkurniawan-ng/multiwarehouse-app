@@ -8,7 +8,6 @@ import com.multiwarehouse.app.order.service.domain.entity.Order;
 import com.multiwarehouse.app.order.service.domain.entity.OrderItem;
 import com.multiwarehouse.app.order.service.domain.entity.Product;
 import com.multiwarehouse.app.order.service.domain.valueobject.OrderItemId;
-import com.multiwarehouse.app.order.service.domain.valueobject.StreetAddress;
 import com.multiwarehouse.app.order.service.domain.valueobject.TrackingId;
 import org.springframework.stereotype.Component;
 
@@ -69,9 +68,10 @@ public class OrderDataAccessMapper {
                 .collect(Collectors.toList());
     }
 
-    private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
-        return new StreetAddress(address.getId(),
+    private Address addressEntityToDeliveryAddress(OrderAddressEntity address) {
+        return new Address(address.getId(),
                 address.getStreet(),
+                address.getProvince(),
                 address.getPostalCode(),
                 address.getCity());
     }
@@ -88,7 +88,7 @@ public class OrderDataAccessMapper {
                 .collect(Collectors.toList());
     }
 
-    private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
+    private OrderAddressEntity deliveryAddressToAddressEntity(Address deliveryAddress) {
         return OrderAddressEntity.builder()
                 .id(deliveryAddress.getId())
                 .street(deliveryAddress.getStreet())

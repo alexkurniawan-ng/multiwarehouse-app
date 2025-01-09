@@ -36,5 +36,5 @@ public class OrderCreateCommandHandler {
 }
 
 
-// Note: All publish messages are handled by this
+// Note: All publish messages are handled by this -> not actually, publish are on te persistOrder
 // check on dto -> create -> CreateOrderCommand & CreateOrderResponse

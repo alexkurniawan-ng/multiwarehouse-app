@@ -1,127 +1,82 @@
 package com.multiwarehouse.app.payment.service.domain.entity;
 
 import com.multiwarehouse.app.domain.entity.AggregateRoot;
-import com.multiwarehouse.app.domain.valueobject.*;
-import com.multiwarehouse.app.payment.service.domain.exception.PaymentDomainException;
-import com.multiwarehouse.app.payment.service.domain.valueobject.PaymentMethodId;
+import com.multiwarehouse.app.domain.valueobject.CustomerId;
+import com.multiwarehouse.app.domain.valueobject.Money;
+import com.multiwarehouse.app.domain.valueobject.OrderId;
+import com.multiwarehouse.app.domain.valueobject.PaymentStatus;
+import com.multiwarehouse.app.payment.service.domain.valueobject.PaymentId;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public class Payment extends AggregateRoot<PaymentId> {
+
     private final OrderId orderId;
     private final CustomerId customerId;
-    private final Money amount;
-    private final String currency;
-    private final PaymentMethod paymentMethod;
+    private final Money price;
 
     private PaymentStatus paymentStatus;
-    private List<String> failureMessages;
-
-    public static final String FAILURE_MESSAGE_DELIMITER = ",";
+    private ZonedDateTime createdAt;
 
     public void initializePayment() {
         setId(new PaymentId(UUID.randomUUID()));
-        paymentStatus = PaymentStatus.PENDING;
+        createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
     }
 
-    public void validatePayment() {
-        validateInitialPayment();
-        validateTotalAmount();
-    }
-
-    public void confirm() {
-        if (paymentStatus != PaymentStatus.PENDING) {
-            throw new PaymentDomainException("Payment is not in correct state for confirm operation!");
-        }
-        paymentStatus = PaymentStatus.COMPLETED;
-    }
-
-    public void initRefund() {
-        if (paymentStatus != PaymentStatus.COMPLETED) {
-            throw new PaymentDomainException("Payment is not in correct state for initRefund operation!");
-        }
-        paymentStatus = PaymentStatus.AWAITING_REFUND;
-    }
-
-    public void refund() {
-        if (paymentStatus != PaymentStatus.AWAITING_REFUND) {
-            throw new PaymentDomainException("Payment is not in correct state for refund operation!");
-        }
-        paymentStatus = PaymentStatus.REFUNDED;
-    }
-
-    public void initCancel(List<String> failureMessages) {
-        if (paymentStatus != PaymentStatus.COMPLETED) {
-            throw new PaymentDomainException("Payment is not in correct state for initCancel operation!");
-        }
-        paymentStatus = PaymentStatus.CANCELLING;
-        updateFailureMessages(failureMessages);
-    }
-
-    public void cancel(List<String> failureMessages) {
-        if (!(paymentStatus == PaymentStatus.CANCELLING || paymentStatus == PaymentStatus.PENDING)) {
-            throw new PaymentDomainException("Payment is not in correct state for cancel operation!");
-        }
-        paymentStatus = PaymentStatus.CANCELLED;
-        updateFailureMessages(failureMessages);
-    }
-
-    private void updateFailureMessages(List<String> failureMessages) {
-        if (this.failureMessages != null && failureMessages != null) {
-            this.failureMessages.addAll(failureMessages.stream().filter(message -> !message.isEmpty()).toList());
-        }
-        if (this.failureMessages == null) {
-            this.failureMessages = failureMessages;
+    public void validatePayment(List<String> failureMessages) {
+        if (price == null || !price.isGreaterThanZero()) {
+            failureMessages.add("Total price must be greater than zero!");
         }
     }
 
-    private void validateInitialPayment() {
-        if (paymentStatus != null || getId() != null) {
-            throw new PaymentDomainException("Payment is not in correct state for initialization");
-        }
-    }
-
-    private void validateTotalAmount() {
-        if (amount == null || !amount.isGreaterThanZero()) {
-            throw new PaymentDomainException("Total amount must be greater than zero!");
-        }
+    public void updateStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     private Payment(Builder builder) {
-        super.setId(builder.paymentId);
+        setId(builder.paymentId);
         orderId = builder.orderId;
         customerId = builder.customerId;
-        amount = builder.amount;
-        currency = builder.currency;
-        paymentMethod = builder.paymentMethod;
+        price = builder.price;
         paymentStatus = builder.paymentStatus;
-        failureMessages = builder.failureMessages;
+        createdAt = builder.createdAt;
     }
 
-    public static Builder builder() { return new Builder(); }
+    public static Builder builder() {
+        return new Builder();
+    }
 
-    public OrderId getOrderId() { return orderId; }
 
-    public CustomerId getCustomerId() { return customerId; }
+    public OrderId getOrderId() {
+        return orderId;
+    }
 
-    public Money getAmount() { return amount; }
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
 
-    public String getCurrency() { return currency; }
+    public Money getPrice() {
+        return price;
+    }
 
-    public PaymentStatus getPaymentStatus() { return paymentStatus; }
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
 
-    public List<String> getFailureMessages() { return failureMessages; }
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     public static final class Builder {
         private PaymentId paymentId;
         private OrderId orderId;
         private CustomerId customerId;
-        private Money amount;
-        private String currency;
-        private PaymentMethod paymentMethod;
+        private Money price;
         private PaymentStatus paymentStatus;
-        private List<String> failureMessages;
+        private ZonedDateTime createdAt;
 
         private Builder() {
         }
@@ -141,18 +96,8 @@ public class Payment extends AggregateRoot<PaymentId> {
             return this;
         }
 
-        public Builder amount(Money val) {
-            amount = val;
-            return this;
-        }
-
-        public Builder currency(String val) {
-            currency = val;
-            return this;
-        }
-
-        public Builder paymentMethod(PaymentMethod val) {
-            paymentMethod = val;
+        public Builder price(Money val) {
+            price = val;
             return this;
         }
 
@@ -161,12 +106,13 @@ public class Payment extends AggregateRoot<PaymentId> {
             return this;
         }
 
-        public Builder failureMessages(List<String> val) {
-            failureMessages = val;
+        public Builder createdAt(ZonedDateTime val) {
+            createdAt = val;
             return this;
         }
 
-        public Payment build() { return new Payment(this); }
+        public Payment build() {
+            return new Payment(this);
+        }
     }
-
 }

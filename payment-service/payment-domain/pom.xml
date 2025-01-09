@@ -7,7 +7,6 @@
         <groupId>com.multiwarehouse.app</groupId>
         <artifactId>payment-service</artifactId>
         <version>1.0-SNAPSHOT</version>
-<!--        <relativePath>../../pom.xml</relativePath>-->
     </parent>
 
     <artifactId>payment-domain</artifactId>
@@ -18,10 +17,13 @@
         <module>payment-domain-core</module>
     </modules>
 
-    <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

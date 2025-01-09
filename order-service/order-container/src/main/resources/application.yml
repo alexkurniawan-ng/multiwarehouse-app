@@ -8,6 +8,7 @@ logging:
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
+  warehouse-stock-request-topic-name: warehouse-stock-request
   seller-approval-request-topic-name: seller-approval-request
   seller-approval-response-topic-name: seller-approval-response
 

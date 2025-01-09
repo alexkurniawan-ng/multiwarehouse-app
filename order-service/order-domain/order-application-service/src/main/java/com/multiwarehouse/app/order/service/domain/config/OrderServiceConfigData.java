@@ -11,5 +11,6 @@ public class OrderServiceConfigData {
     private String paymentRequestTopicName;
     private String paymentResponseTopicName;
     private String sellerApprovalRequestTopicName;
+    private String warehouseStockRequestTopicName;
     private String sellerApprovalResponseTopicName;
 }

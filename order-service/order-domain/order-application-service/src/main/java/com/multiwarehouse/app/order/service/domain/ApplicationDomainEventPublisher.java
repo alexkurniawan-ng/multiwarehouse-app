@@ -23,7 +23,7 @@ public class ApplicationDomainEventPublisher implements
     @Override
     public void publish(OrderCreatedEvent domainEvent) {
         this.applicationEventPublisher.publishEvent(domainEvent);
-        log.info("OrderCretedEvent is published for order id: {}", domainEvent.getOrder()
+        log.info("OrderCreatedEvent is published for order id: {}", domainEvent.getOrder()
                 .getId().getValue());
     }
 
